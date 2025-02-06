@@ -3,8 +3,7 @@ title: "Lab 05 - Data Wrangling"
 output: 
   html_document:
     html_preview: false
-    # md_document
-link-citations: yes
+link-citations: true
 ---
 
 # Learning goals
