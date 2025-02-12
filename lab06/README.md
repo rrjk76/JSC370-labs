@@ -262,5 +262,11 @@ For example, if we wanted to add a direct link the HTML page of lecture
 6, we could do something like the following:
 
 ``` md
-View Week 6 Tutorial [here](https://cdn.jsdelivr.net/gh/:rrjk76/:JSC370-labs/@:main/:lab06/06-lab.html)
+View Week 6 Tutorial [here](https://cdn.jsdelivr.net/gh/rrjk76/JSC370-labs/@main/lab06/06-lab.html)
 ```
+
+View Week 6 Tutorial HTML Page
+[here](https://raw.githack.com/rrjk76/JSC370-labs/main/lab06/06-lab.html)
+
+View Week 6 Tutorial HTML document
+[here](https://cdn.jsdelivr.net/gh/rrjk76/JSC370-labs@main/lab06/06-lab.html)
