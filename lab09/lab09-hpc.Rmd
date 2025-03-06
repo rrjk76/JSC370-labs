@@ -1,7 +1,6 @@
 ---
 title: "Lab 9 - HPC"
-output: 
-html_document: default
+output: html_document
 link-citations: yes
 ---
 
@@ -85,6 +84,7 @@ _Much faster in every term, implying that the new function is more efficient. Af
 ```{r p2-fun2}
 # Data Generating Process (10 x 10,000 matrix)
 set.seed(1234)
+# inefficient, b/c it loops through all columns and applies the max function, which leads to a slower run time. (apply function is slower than direct matrix indexing)
 x <- matrix(rnorm(1e4), nrow=10)
 
 # Find each column's max value
@@ -107,7 +107,7 @@ bench <- microbenchmark::microbenchmark(
 )
 ```
 
-- inefficient, b/c it loops through all columns and applies the max function, which leads to a slower run time. (apply function is slower than direct matrix indexing)
+
 _Answer here with a plot._
 ```{r}
 # plot 
@@ -129,7 +129,7 @@ observations from our original dataset, which reflects the population.
 
 This function implements the non-parametric bootstrap:
 
-```{r p3-boot-fun, eval = FALSE}
+```{r p3-boot-fun}
 library(parallel)
 my_boot <- function(dat, stat, R, ncpus = 1L) {
   
@@ -178,7 +178,7 @@ my_boot <- function(dat, stat, R, ncpus = 1L) {
 
 1. Use the previous pseudocode, and make it work with `parallel`. Here is just an example for you to try:
 
-```{r p3-test-boot, eval = FALSE}
+```{r p3-test-boot}
 # Bootstrap of a linear regression model
 my_stat <- function(d)  coef(lm(y~x, data = d))
 
@@ -203,7 +203,7 @@ print(t(apply(ans1, 2, quantile, probs = qs)))
 
 2. Check whether your version actually goes faster than the non-parallel version:
 
-```{r benchmark-problem3, eval = FALSE}
+```{r benchmark-problem3}
 # your code here
 parallel::detectCores()
 
@@ -215,7 +215,7 @@ system.time(my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 1L))
 system.time(my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 8L))
 ```
 
-_Yes, my version does actually go faster than the non-parallel version. This is seen, as the 8 core one runs much faster than the 1 core one. As seen above, the elapsed time for the parallel 8 cores is shorter than the elapsed time for the non-parallel 1 core (3.134 > 1.743)_
+_Yes, my version does actually go faster than the non-parallel version. This is seen as the 8 core one runs much faster than the 1 core one. Above, the elapsed time for the parallel 8 cores is shorter than the elapsed time for the non-parallel 1 core_
 
 ## Problem 4: Compile this markdown document using Rscript
 
@@ -228,5 +228,7 @@ Rscript --vanilla -e 'rmarkdown::render("[full-path-to-your-Rmd-file.Rmd]")' &
 
 Where `[full-path-to-your-Rmd-file.Rmd]` should be replace with the full path to
 your Rmd file... :).
+
+
 
 

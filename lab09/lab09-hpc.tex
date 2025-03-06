@@ -1,0 +1,427 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Lab 9 - HPC},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lab 9 - HPC}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{Learning goals}\label{learning-goals}
+
+In this lab, you are expected to practice the following skills:
+
+\begin{itemize}
+\tightlist
+\item
+  Evaluate whether a problem can be parallelized or not.
+\item
+  Practice with the parallel package.
+\item
+  Use Rscript to submit jobs.
+\end{itemize}
+
+\subsection{Problem 1}\label{problem-1}
+
+Give yourself a few minutes to think about what you learned about
+parallelization. List three examples of problems that you believe may be
+solved using parallel computing, and check for packages on the HPC CRAN
+task view that may be related to it.
+
+\begin{itemize}
+\item
+  Cross-Validation in machine learning - distributing training
+\item
+  caret package -\textgreater{} supports parallel cross-validation with
+  \texttt{doParallel}
+\item
+  mlr, foreach, doParallel -\textgreater{} for parallel model training
+\item
+  Bootstrapping (like for estimating confidence intervals, drawing
+  random samples)
+\item
+  boot -\textgreater{} for bootstrapping
+\item
+  parallel -\textgreater{} parallelize resampling
+\item
+  doParallel, foreach
+\item
+  Bayesian Inference:
+\item
+  markove chain monte carlo (when approximating distributions and
+  generating samples from the posterior distributions)\\
+\item
+  parallel -rstan -\textgreater{} for stan in bayesian modelling
+\item
+  RcppParallel -\textgreater{} parallel mcmc sampling automatically
+  -nimle -\textgreater{} customize bayesian inference
+\end{itemize}
+
+\subsection{Problem 2:
+Pre-parallelization}\label{problem-2-pre-parallelization}
+
+The following functions can be written to be more efficient without
+using \texttt{parallel}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  This function generates a \texttt{n\ x\ k} dataset with all its
+  entries having a Poisson distribution with mean \texttt{lambda}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# inefficient because it\textquotesingle{}s using a for loop with rbind (reallocating memory each time). this wastes a lot of computation power when reallocating memory (worse with larger matrices). }
+\CommentTok{\# using rbind is very slow, because R copies every object at every iteration }
+\NormalTok{fun1 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{100}\NormalTok{, }\AttributeTok{k =} \DecValTok{4}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{4}\NormalTok{) \{}
+\NormalTok{  x }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+  
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n)}
+\NormalTok{    x }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(x, }\FunctionTok{rpois}\NormalTok{(k, lambda))}
+  
+  \FunctionTok{return}\NormalTok{(x)}
+\NormalTok{\}}
+
+\NormalTok{fun1alt }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{100}\NormalTok{, }\AttributeTok{k =} \DecValTok{4}\NormalTok{, }\AttributeTok{lambda =} \DecValTok{4}\NormalTok{) \{}
+  \CommentTok{\# YOUR CODE HERE}
+  \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rpois}\NormalTok{(n}\SpecialCharTok{*}\NormalTok{k, }\AttributeTok{lambda =}\NormalTok{ lambda), }\AttributeTok{ncol =}\NormalTok{ k)}
+  \CommentTok{\# here, we\textquotesingle{}re using matrix function instead of for loop and rbind}
+  \CommentTok{\# matrix allows us to pre{-}allocate memory. }
+  \CommentTok{\# rpois(n*k, lambda = lambda) allows us to generate the random numbers all at once }
+\NormalTok{\}}
+
+\CommentTok{\# Benchmarking}
+\NormalTok{microbenchmark}\SpecialCharTok{::}\FunctionTok{microbenchmark}\NormalTok{(}
+  \FunctionTok{fun1}\NormalTok{(}\DecValTok{100}\NormalTok{),}
+  \FunctionTok{fun1alt}\NormalTok{(}\DecValTok{100}\NormalTok{),}
+  \AttributeTok{unit =} \StringTok{"ns"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in microbenchmark::microbenchmark(fun1(100), fun1alt(100), unit =
+## "ns"): less accurate nanosecond times to avoid potential integer overflows
+\end{verbatim}
+
+\begin{verbatim}
+## Unit: nanoseconds
+##          expr    min       lq      mean   median       uq     max neval
+##     fun1(100) 124722 133639.5 153851.68 140650.5 144012.5 1535614   100
+##  fun1alt(100)  13120  13919.5  87048.33  14432.0  15252.0 7184799   100
+\end{verbatim}
+
+How much faster? \emph{Much faster in every term, implying that the new
+function is more efficient. After some calculations, I found that
+fun1alt(100) is approximately 8.88 times faster than fun1(100).}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Find the column max (hint: Checkout the function \texttt{max.col()}).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Data Generating Process (10 x 10,000 matrix)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\FloatTok{1e4}\NormalTok{), }\AttributeTok{nrow=}\DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Find each column\textquotesingle{}s max value}
+\NormalTok{fun2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{apply}\NormalTok{(x, }\DecValTok{2}\NormalTok{, max)}
+\NormalTok{\}}
+
+\NormalTok{fun2alt }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \CommentTok{\# YOUR CODE HERE}
+\NormalTok{  x[}\FunctionTok{cbind}\NormalTok{(}\FunctionTok{max.col}\NormalTok{(}\FunctionTok{t}\NormalTok{(x)), }\DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(x))]}
+  \CommentTok{\# avoids function calls inside loops}
+  \CommentTok{\# directly extracts the max values }
+\NormalTok{\}}
+
+\CommentTok{\# Benchmarking}
+\NormalTok{bench }\OtherTok{\textless{}{-}}\NormalTok{ microbenchmark}\SpecialCharTok{::}\FunctionTok{microbenchmark}\NormalTok{(}
+  \FunctionTok{fun2}\NormalTok{(x),}
+  \FunctionTok{fun2alt}\NormalTok{(x),}
+  \AttributeTok{unit =} \StringTok{"micro"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  inefficient, b/c it loops through all columns and applies the max
+  function, which leads to a slower run time. (apply function is slower
+  than direct matrix indexing) \emph{Answer here with a plot.}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot }
+\FunctionTok{plot}\NormalTok{(bench)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lab09-hpc_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggplot2}\SpecialCharTok{::} \FunctionTok{autoplot}\NormalTok{(bench) }\SpecialCharTok{+} 
+\NormalTok{  ggplot2}\SpecialCharTok{::}\FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lab09-hpc_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\subsection{Problem 3: Parallelize
+everything}\label{problem-3-parallelize-everything}
+
+We will now turn our attention to non-parametric
+\href{https://en.wikipedia.org/wiki/Bootstrapping_(statistics)}{bootstrapping}.
+Among its many uses, non-parametric bootstrapping allow us to obtain
+confidence intervals for parameter estimates without relying on
+parametric assumptions.
+
+The main assumption is that we can approximate many experiments by
+resampling observations from our original dataset, which reflects the
+population.
+
+This function implements the non-parametric bootstrap:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(parallel)}
+\NormalTok{my\_boot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dat, stat, R, }\AttributeTok{ncpus =} \DecValTok{1}\DataTypeTok{L}\NormalTok{) \{}
+  
+  \CommentTok{\# Getting the random indices}
+\NormalTok{  n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dat)}
+\NormalTok{  idx }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{sample.int}\NormalTok{(n, n}\SpecialCharTok{*}\NormalTok{R, }\ConstantTok{TRUE}\NormalTok{), }\AttributeTok{nrow=}\NormalTok{n, }\AttributeTok{ncol=}\NormalTok{R)}
+ 
+  \CommentTok{\# Making the cluster using \textasciigrave{}ncpus\textasciigrave{}}
+  \CommentTok{\# STEP 1: GOES HERE}
+  \CommentTok{\# creates a cluster for parallel computer: }
+  \CommentTok{\# ncpus specifies using multiple CPU cores }
+  \CommentTok{\# PSOCK = parallel socket cluster }
+  \CommentTok{\# need a cluster, b/c R by default runs sequentially. By creating clusters, it allows us     to run multiple independent computations, running many across the CPU ports }
+\NormalTok{  cl }\OtherTok{\textless{}{-}} \FunctionTok{makePSOCKcluster}\NormalTok{(ncpus)}
+  
+  \CommentTok{\# STEP 2: GOES HERE}
+  \CommentTok{\# on.exit(stopCluster(cl)) automatically shuts down clusters. w/o this, the clusters        continue, takes up memory, and could cause memory leaks }
+  \CommentTok{\# export the variables to the cluster }
+  
+  \FunctionTok{clusterExport}\NormalTok{(cl, }\AttributeTok{varlist =} \FunctionTok{c}\NormalTok{(}\StringTok{"idx"}\NormalTok{, }\StringTok{"dat"}\NormalTok{, }\StringTok{"stat"}\NormalTok{), }\AttributeTok{envir =} \FunctionTok{environment}\NormalTok{()) }
+    \CommentTok{\# sending variables to all worker nodes}
+    \CommentTok{\# each run in isolated environments, don\textquotesingle{}t have access to global variable }
+    \CommentTok{\# idx {-}\textgreater{} resampling indices for bootstrap }
+    \CommentTok{\# dat {-}\textgreater{} dataset }
+    \CommentTok{\# stat {-}\textgreater{} the statistical function that we use to compute the estimates }
+  
+  
+  \CommentTok{\# change sequential apply to parallelized apply}
+  \CommentTok{\# STEP 3: THIS FUNCTION NEEDS TO BE REPLACED WITH parLapply}
+\NormalTok{  ans }\OtherTok{\textless{}{-}} \FunctionTok{parLapply}\NormalTok{(cl, }\FunctionTok{seq\_len}\NormalTok{(R), }\ControlFlowTok{function}\NormalTok{(i) \{}
+    \FunctionTok{stat}\NormalTok{(dat[idx[,i], , }\AttributeTok{drop=}\ConstantTok{FALSE}\NormalTok{])}
+\NormalTok{  \})}
+  
+  \CommentTok{\# Coercing the list into a matrix}
+\NormalTok{  ans }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind, ans)}
+  
+  \CommentTok{\# STEP 4: GOES HERE}
+  \FunctionTok{stopCluster}\NormalTok{(cl)}
+  \CommentTok{\# why? }
+    \CommentTok{\# to free up the system resources }
+  
+\NormalTok{  ans}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use the previous pseudocode, and make it work with \texttt{parallel}.
+  Here is just an example for you to try:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Bootstrap of a linear regression model}
+\NormalTok{my\_stat }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(d)  }\FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x, }\AttributeTok{data =}\NormalTok{ d))}
+
+\CommentTok{\# DATA SIM}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{500} 
+\NormalTok{R }\OtherTok{\textless{}{-}} \FloatTok{1e4}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(n)) }
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ x}\SpecialCharTok{*}\DecValTok{5} \SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(n)}
+
+\CommentTok{\# Check if we get something similar as lm}
+\CommentTok{\# OLS CI }
+\NormalTok{ans0 }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"OLS CI }\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(ans0)}
+
+\NormalTok{ans1 }\OtherTok{\textless{}{-}} \FunctionTok{my\_boot}\NormalTok{(}\AttributeTok{dat =} \FunctionTok{data.frame}\NormalTok{(x, y), my\_stat, }\AttributeTok{R =}\NormalTok{ R, }\AttributeTok{ncpus =} \DecValTok{4}\NormalTok{)}
+\NormalTok{qs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{975}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Bootsrap CI }\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{t}\NormalTok{(}\FunctionTok{apply}\NormalTok{(ans1, }\DecValTok{2}\NormalTok{, quantile, }\AttributeTok{probs =}\NormalTok{ qs)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Check whether your version actually goes faster than the non-parallel
+  version:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# your code here}
+\NormalTok{parallel}\SpecialCharTok{::}\FunctionTok{detectCores}\NormalTok{()}
+
+\CommentTok{\# non{-}parallel 1 core}
+\FunctionTok{system.time}\NormalTok{(}\FunctionTok{my\_boot}\NormalTok{(}\AttributeTok{dat =} \FunctionTok{data.frame}\NormalTok{(x, y), my\_stat, }\AttributeTok{R =}\NormalTok{ R, }\AttributeTok{ncpus =} \DecValTok{1}\DataTypeTok{L}\NormalTok{))}
+
+
+\CommentTok{\# parallel 8 cores}
+\FunctionTok{system.time}\NormalTok{(}\FunctionTok{my\_boot}\NormalTok{(}\AttributeTok{dat =} \FunctionTok{data.frame}\NormalTok{(x, y), my\_stat, }\AttributeTok{R =}\NormalTok{ R, }\AttributeTok{ncpus =} \DecValTok{8}\DataTypeTok{L}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Yes, my version does actually go faster than the non-parallel
+version. This is seen, as the 8 core one runs much faster than the 1
+core one. As seen above, the elapsed time for the parallel 8 cores is
+shorter than the elapsed time for the non-parallel 1 core (3.134
+\textgreater{} 1.743)}
+
+\subsection{Problem 4: Compile this markdown document using
+Rscript}\label{problem-4-compile-this-markdown-document-using-rscript}
+
+Once you have saved this Rmd file, try running the following command in
+your terminal:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{Rscript} \AttributeTok{{-}{-}vanilla} \AttributeTok{{-}e} \StringTok{\textquotesingle{}rmarkdown::render("[full{-}path{-}to{-}your{-}Rmd{-}file.Rmd]")\textquotesingle{}} \KeywordTok{\&}
+\end{Highlighting}
+\end{Shaded}
+
+Where \texttt{{[}full-path-to-your-Rmd-file.Rmd{]}} should be replace
+with the full path to your Rmd file\ldots{} :).
+
+\end{document}
