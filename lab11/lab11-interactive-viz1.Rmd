@@ -1,0 +1,317 @@
+---
+title: "Lab 11 - Interactive Visualization"
+output: github_document
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(eval = FALSE, include  = TRUE)
+```
+
+# Learning Goals
+
+- Read in and process Starbucks data.
+- Create interactive visualizations of different types using `plot_ly()` and `ggplotly()`.
+- Customize the hoverinfo and other plot features.
+- Create a Choropleth map using `plot_geo()`.
+
+# Lab Description
+
+We will work with two Starbucks datasets, one on the store locations (global) and one for the nutritional data for their food and drink items. We will do some text analysis of the menu items.
+
+# Deliverables
+
+Upload an html file to Quercus and make sure the figures remain interactive.
+
+# Steps
+
+### 0. Install and load libraries
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(plotly)
+library(widgetframe)
+library(tidytext)
+library(ggplot2)
+```
+
+### 1. Read in the data
+
+- There are 4 datasets to read in, Starbucks locations, Starbucks nutrition, US population by state, and US state abbreviations. All of them are on the course GitHub.
+
+```{r}
+sb_locs <- read_csv("https://raw.githubusercontent.com/JSC370/JSC370-2025/refs/heads/main/data/starbucks/starbucks-locations.csv")
+
+sb_nutr <- read_csv("https://raw.githubusercontent.com/JSC370/JSC370-2025/refs/heads/main/data/starbucks/starbucks-menu-nutrition.csv")
+
+usa_pop <- read_csv("https://raw.githubusercontent.com/JSC370/JSC370-2025/refs/heads/main/data/starbucks/us_state_pop.csv")
+
+usa_states<-read_csv("https://raw.githubusercontent.com/JSC370/JSC370-2025/refs/heads/main/data/starbucks/states.csv")
+```
+
+### 2. Look at the data
+
+- Inspect each dataset to look at variable names and ensure it was imported correctly.
+
+
+```{r}
+head(sb_locs)
+head(sb_nutr)
+head(usa_pop)
+head(usa_states)
+```
+
+- `sb_locs` = Starbucks locations, including their street address, the city, the state/province, and longitude and latitude 
+- `sb_nutr` = the nutrient information of the items on the Starbucks menus, including calories, fat, car, fiber, protein
+- `usa_pop` = population in the different states in usa 
+- `usa_states` = abbreviations of all the us states 
+
+### 3. Format and merge the data
+
+- Subset Starbucks data to the US.
+- Create counts of Starbucks stores by state.
+- Merge population in with the store count by state.
+- Inspect the range values for each variable. 
+
+```{r}
+sb_usa <- sb_locs |> filter(Country == "US")
+
+sb_locs_state <- sb_usa |>
+  group_by("State/Province") |>
+  rename(state = "State/Province") |>
+  group_by(state) |>
+  summarize(n_stores = n())
+
+# need state abbreviations
+usa_pop_abbr <- 
+  full_join(usa_pop, usa_states,
+            by = join_by(state == State)
+            ) 
+  
+sb_locs_state <- full_join(sb_locs_state, usa_pop_abbr,
+                           by = join_by(state == Abbreviation))
+  
+
+summary(sb_locs_state)
+```
+For the numeric values, the number of stores ranges from 8 stores per state/province to 2821 stores per state/province. The population ranges from 56882 to 37253956. The other variables are of type character. 
+
+### 4. Use `ggplotly` for EDA
+
+Answer the following questions:
+
+- Are the number of Starbucks proportional to the population of a state? (scatterplot)
+
+- Is the caloric distribution of Starbucks menu items different for drinks and food? (histogram)
+
+- What are the top 20 words in Starbucks menu items? (bar plot)
+
+```{r}
+p1 <- ggplot(sb_locs_state, aes(x = population, y = n_stores,
+                                colour = state)) +
+  geom_point(alpha = 0.8) +
+  theme_bw() 
+
+
+ggplotly(p1)
+
+
+```
+
+- 4a) Answer: 
+
+The plot does appear to show a general trend, where as the population grows, the number of Starbucks stores also increases. However, the correlation here is not strictly linear, as some states (like the state with the abbreviation WA) have more stores than expected based on their population. But overall, yes, the number of Starbucks stores is correlated with population, but not perfectly proportional. 
+
+
+```{r}
+p2 <- ggplot(sb_nutr, aes(x = Calories, fill = Category)) +
+  geom_histogram(alpha = 0.6) +
+  theme_bw() 
+
+ggplotly(p2)
+
+```
+
+- 4b) Answer: 
+
+Yes, the caloric distribution of Starbucks menu items is different for drinks and food. The majority of drinks have a lower calorie count, clustering between 0 calories and 300 calories, whereas foods mainly cluster between 100 calories all the way to 600 calories. So, drinks tend to have a lower caloric range, while food items generally have higher calorie values.
+ 
+
+```{r}
+p3 <- sb_nutr |> 
+  unnest_tokens(word, Item, token = "words") |>
+  count(word, sort = T) |>
+  head(20) |>
+  ggplot(aes(fct_reorder(word, n), n)) +
+  geom_col() +
+  coord_flip() +
+  theme_bw()
+
+ggplotly(p3)
+```
+
+- 4c) Answer: 
+
+The top word is `iced`, as it is seen 32 times in the `sb_nutr` dataset. `tazo`, `bottled`, `sandwich`, and `chocolate` are also in the top 20 words. 
+
+### 5. Scatterplots using `plot_ly()`
+
+- Create a scatterplot using `plot_ly()` representing the relationship between calories and carbs. Color the points by category (food or beverage). Is there a relationship, and do food or beverages tend to have more calories?
+
+```{r}
+sb_nutr |>
+  plot_ly(x = ~Calories, y = ~`Carb. (g)`, 
+          type = "scatter", mode = "markers", color = ~Category)
+  
+```
+
+
+- 5a) Answer:
+
+Yes, there is a relationship between calories and carbs, as in the scatterplot, generally higher caolories lead to higher carbs. Food tends to have more calories than drinks. 
+
+- Repeat this scatterplot but for the items that include the top 10 words. Color again by category, and add hoverinfo specifying the word in the item name. Add layout information to title the chart and the axes, and enable `hovermode = "compare"`.
+- What are the top 10 words and is the plot much different than above?
+  
+```{r}
+topwords <- sb_nutr |> 
+  unnest_tokens(word, Item, token = "words") |>
+  group_by(word) |>
+  summarise(word_frequency = n()) |>
+  arrange(across(word_frequency, desc)) |>
+  head(10)
+  
+
+sb_nutr |> 
+  unnest_tokens(word, Item, token = "words") |>
+  filter(word %in% topwords$word) |>
+  plot_ly(
+    x = ~Calories,
+    y = ~`Carb. (g)`,
+    type = "scatter", 
+    mode = "markers",
+    color = ~Category,
+    hoverinfo  = "text",
+    text = ~paste0("Item: ", word)
+  ) |>
+  layout(
+    title = "Cal vs Carbs",
+    xaxis = list(title = "Calories"),
+    yaxis  = list(title = "Carbs"),
+    hovermode = "compare"
+    
+  )
+```
+
+- 5b) Answer:
+
+
+### 6. `plot_ly` Boxplots
+
+- Create a boxplot of all of the nutritional variables in groups by the 10 item words.
+- Which top word has the most calories? Which top word has the most protein?
+
+```{r}
+sb_nutr_long <- sb_nutr |>
+  unnest_tokens(word, Item, token = "words") |>
+  filter(word %in% topwords$word) |>
+  pivot_longer(cols = c(Calories, `Fat (g)`, `Carb. (g)`,
+                        `Fiber (g)`, `Protein (g)`), names_to = "Nutrient", values_to = "value")
+
+
+plot_ly(data = sb_nutr_long, 
+        x = ~word,
+        y = ~value, 
+        color = ~Nutrient,
+        type = "box" ) |>
+  layout(
+    title = "Nutrient values for the top 10 word items",
+    xaxis = list(title = "Item word"),
+    yaxis = list(title = "Nutritional Value")
+  )
+
+```
+
+- 6) Answer:
+
+The top word that has the most calories are sandwiches, as their median is the highest (460), and their tails are the highest - indicating that in general they have more calories compared to the other words. The words that have the highest protein are sandwich and egg. Both their medians are pretty similar (19 and 18.5 respectively). The box (and the tails) for the word sandwich are larger, indicating more variation compared to the protein amount in the word egg. 
+
+### 7. 3D Scatterplot
+
+- Create a 3D scatterplot between Calories, Carbs, and Protein for the items containing the top 10 words
+- Do you see any patterns (clusters or trends)?
+
+```{r}
+sb_nutr_long <- sb_nutr |>
+  unnest_tokens(word, Item, token = "words") |>
+  filter(word %in% topwords$word[1:10]) |>
+  plot_ly(
+    x = ~Calories,
+    y = ~`Carb. (g)`,
+    z = ~`Protein (g)`,
+    color = ~word,
+    type = "scatter3d",
+    mode = "markers",
+    marker = list(size = 5)) |>
+  
+    layout(
+      title = "3D scatterplot of Calories, Carbs, and Protein",
+      scene = list(
+        xaxis = list(title = "Calories"),
+        yaxis = list(title = "Carbohydrates (g)"),
+        zaxis = list(title = "Protein (g)")
+      )
+    )
+  
+sb_nutr_long
+
+```
+
+- 7) Answer:
+
+There seems to be a very weak overall trend (as it is quite spread out). For the most part, I can see that higher calories generally lead to higher carbs and protein. So yes, there does seem to be an overall trend. 
+
+### 8. `plot_ly` Map
+
+- Create a map to visualize the number of stores per state, and another for the population by state. Add custom hover text. Use subplot to put the maps side by side.
+- Describe the differences if any.
+
+```{r}
+# Set up mapping details
+set_map_details <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('steelblue')
+)
+
+# Make sure both maps are on the same color scale
+shadeLimit <- 125
+
+# Create hover text
+sb_locs_state$hover <- with(sb_locs_state, paste("Number of Starbucks: ", n_stores, '<br>', "State: ", state.y, '<br>', "Population: ", population))
+
+# Create the map
+map1 <- plot_geo(sb_locs_state, locationmode = "USA-states") |>
+  add_trace(z = ~n_stores, text = ~hover, locations = ~state, color = ~n_stores, colors = "Purples") |>
+  layout(
+    title = "starbucks store by state", geo = set_map_details)
+map1
+
+
+map2 <- plot_geo(sb_locs_state, locationmode = "USA-states") |>
+  add_trace(z = ~population, text = ~hover, locations = ~state, color = ~n_stores, colors = "Purples") |>
+  layout(
+    title = "starbucks store by state", geo = set_map_details)
+map2
+
+subplot(map1, map2)
+```
+
+- 8) Answer:
+
+When put side by side, I do think that states with higher population tend to have a higher number of Starbucks stores. For instance, California has the highest population and also the highest number of Starbucks stores, Texas has the second highest population and the second largest number of stores. Overall, the maps look relatively similar (color-wise). Therefore, there isn't much of a difference. 
+
+
+
+- Bonus) Type in comment of submission: fav Starbucks drink 
