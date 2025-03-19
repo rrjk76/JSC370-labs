@@ -218,7 +218,7 @@ frameWidget(p1)
 ```
 
 
-[View interactive plot](lab11-interactive-viz1_files/figure-gfm/widgets/plotly_libs/widget_unamed-chunk-9.html)
+[View interactive plot](lab11-interactive-viz1_files/figure-gfm/widgets/plotly_libs/widget_unnamed-chunk-9.html)
 
 
 - 4a) Answer:
