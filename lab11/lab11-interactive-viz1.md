@@ -217,10 +217,9 @@ p1 <- ggplotly(p1)
 frameWidget(p1)
 ```
 
-    ## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
 
-<div id="htmlwidget-1bc28ab2c8977dba4262" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1bc28ab2c8977dba4262">{"x":{"url":"lab11-interactive-viz1_files/figure-gfm//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+[View interactive plot](lab11-interactive-viz1_files/figure-gfm/widgets/plotly_libs/widget_unamed-chunk-9.html)
+
 
 - 4a) Answer:
 
